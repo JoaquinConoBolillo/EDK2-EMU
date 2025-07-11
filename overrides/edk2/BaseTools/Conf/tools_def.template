@@ -1,5 +1,5 @@
-#kgtest3
-#  Copyright (c) 2006 - 2022, Intel Corporation. All rights reserved.<BR>
+#
+#  Copyright (c) 2006 - 2025, Intel Corporation. All rights reserved.<BR>
 #  Portions copyright (c) 2008 - 2009, Apple Inc. All rights reserved.<BR>
 #  Portions copyright (c) 2011 - 2019, ARM Ltd. All rights reserved.<BR>
 #  Copyright (c) 2015, Hewlett-Packard Development Company, L.P.<BR>
@@ -868,7 +868,7 @@ RELEASE_VS2022_ARM_DLINK_FLAGS    = /NOLOGO /NODEFAULTLIB /IGNORE:4001 /IGNORE:4
 NOOPT_VS2022_ARM_DLINK_FLAGS      = /NOLOGO /NODEFAULTLIB /IGNORE:4001 /OPT:REF /OPT:ICF=10 /MAP /SECTION:.xdata,D /SECTION:.pdata,D /MACHINE:ARM /LTCG /DLL /ENTRY:$(IMAGE_ENTRY_POINT) /SUBSYSTEM:EFI_BOOT_SERVICE_DRIVER /SAFESEH:NO /BASE:0 /DRIVER /DEBUG /WX /IGNORE:4210
 
 # BaseTools cannot handle XIP modules with different section and file alignment
-*_VS2022_ARM_DLINK_XIPFLAGS       = /ALIGN:32
+*_VS2022_ARM_DLINK_XIPFLAGS       = /ALIGN:64
 
 #####################
 # AARCH64 definitions
@@ -901,7 +901,7 @@ RELEASE_VS2022_AARCH64_DLINK_FLAGS = /NOLOGO /NODEFAULTLIB /IGNORE:4001 /IGNORE:
 NOOPT_VS2022_AARCH64_DLINK_FLAGS   = /NOLOGO /NODEFAULTLIB /IGNORE:4001 /OPT:REF /OPT:ICF=10 /MAP /SECTION:.xdata,D /SECTION:.pdata,D /MACHINE:ARM64 /LTCG /DLL /ENTRY:$(IMAGE_ENTRY_POINT) /SUBSYSTEM:EFI_BOOT_SERVICE_DRIVER /SAFESEH:NO /DRIVER /DEBUG /WX /IGNORE:4210
 
 # BaseTools cannot handle XIP modules with different section and file alignment
-*_VS2022_AARCH64_DLINK_XIPFLAGS    = /ALIGN:32
+*_VS2022_AARCH64_DLINK_XIPFLAGS    = /ALIGN:64
 
 ####################################################################################
 # GCC Common
@@ -943,7 +943,7 @@ DEFINE GCC_LOONGARCH64_ASLDLINK_FLAGS = DEF(GCC_LOONGARCH64_DLINK_FLAGS) -Wl,--e
 DEFINE GCC_IA32_X64_DLINK_FLAGS    = DEF(GCC_IA32_X64_DLINK_COMMON) --entry _$(IMAGE_ENTRY_POINT) --file-alignment 0x20 --section-alignment 0x20 -Map $(DEST_DIR_DEBUG)/$(BASE_NAME).map
 DEFINE GCC_ASM_FLAGS               = -c -x assembler -imacros AutoGen.h
 DEFINE GCC_PP_FLAGS                = -E -x assembler-with-cpp -include AutoGen.h
-DEFINE GCC_VFRPP_FLAGS             = -x c -E -P -DVFRCOMPILE --include $(MODULE_NAME)StrDefs.h
+DEFINE GCC_VFRPP_FLAGS             = -x c -E -DVFRCOMPILE --include $(MODULE_NAME)StrDefs.h
 DEFINE GCC_ASLPP_FLAGS             = -x c -E -include AutoGen.h
 DEFINE GCC_ASLCC_FLAGS             = -x c
 DEFINE GCC_WINDRES_FLAGS           = -J rc -O coff
@@ -2016,6 +2016,7 @@ NOOPT_CLANGPDB_X64_GENFW_FLAGS      = --keepexceptiontable
 #
 ####################################################################################
 *_CLANGDWARF_*_*_FAMILY             = GCC
+*_CLANGDWARF_*_*_BUILDRULEFAMILY    = CLANGDWARF
 
 *_CLANGDWARF_*_MAKE_PATH            = ENV(CLANG_HOST_BIN)make
 *_CLANGDWARF_*_*_DLL                = ENV(CLANGDWARF_DLL)
